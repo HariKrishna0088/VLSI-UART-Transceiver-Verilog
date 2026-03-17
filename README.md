@@ -5,13 +5,13 @@
   <img src="https://img.shields.io/badge/Simulation-Icarus%20Verilog-purple?style=for-the-badge" alt="Icarus"/>
 </p>
 
-# 📡 UART Transceiver — Verilog HDL
+# ðŸ“¡ UART Transceiver â€” Verilog HDL
 
 > A complete, synthesizable UART (Universal Asynchronous Receiver-Transmitter) implementation with configurable baud rate, loopback testbench, and industry-standard 8N1 protocol.
 
 ---
 
-## 📋 Table of Contents
+## ðŸ“‹ Table of Contents
 
 - [Overview](#-overview)
 - [Architecture](#-architecture)
@@ -25,54 +25,54 @@
 
 ---
 
-## 🔍 Overview
+## ðŸ” Overview
 
 **UART** is the most fundamental serial communication protocol used in embedded systems, FPGA boards, and SoC designs. This project implements a **full-duplex UART transceiver** with separate transmitter and receiver modules, supporting configurable baud rates.
 
 ### Key Highlights
-- 📡 **Full Duplex** — Independent TX and RX channels
-- ⚡ **Configurable Baud Rate** — Parameterized for 9600, 19200, 115200, etc.
-- 🔄 **Loopback Testing** — TX output wired to RX input for self-verification
-- 🛡️ **Error Detection** — Frame error flag for invalid stop bits
-- 🎯 **Mid-bit Sampling** — Noise-immune RX sampling at bit center
-- ✅ **Self-Checking TB** — Automated PASS/FAIL with 10 test vectors
+- ðŸ“¡ **Full Duplex** â€” Independent TX and RX channels
+- âš¡ **Configurable Baud Rate** â€” Parameterized for 9600, 19200, 115200, etc.
+- ðŸ”„ **Loopback Testing** â€” TX output wired to RX input for self-verification
+- ðŸ›¡ï¸ **Error Detection** â€” Frame error flag for invalid stop bits
+- ðŸŽ¯ **Mid-bit Sampling** â€” Noise-immune RX sampling at bit center
+- âœ… **Self-Checking TB** â€” Automated PASS/FAIL with 10 test vectors
 
 ---
 
-## 🏗️ Architecture
+## ðŸ—ï¸ Architecture
 
 ```
                          UART TOP MODULE
-    ┌─────────────────────────────────────────────────┐
-    │                                                 │
-    │   ┌─────────────────┐   ┌─────────────────┐    │
-    │   │   UART TX        │   │   UART RX        │    │
-    │   │                 │   │                 │    │
-    │   │  ┌───────────┐  │   │  ┌───────────┐  │    │
-    │   │  │  Baud Gen  │  │   │  │  Baud Gen  │  │    │
-    │   │  └───────────┘  │   │  └───────────┘  │    │
-    │   │  ┌───────────┐  │   │  ┌───────────┐  │    │
-    │   │  │  TX FSM    │  │   │  │  RX FSM    │  │    │
-    │   │  │ IDLE→START │  │   │  │ IDLE→START │  │    │
-    │   │  │ →DATA→STOP │  │   │  │ →DATA→STOP │  │    │
-    │   │  └───────────┘  │   │  └───────────┘  │    │
-    │   │  ┌───────────┐  │   │  ┌───────────┐  │    │
-    │   │  │ Shift Reg  │──┼───┼─►│ Shift Reg  │  │    │
-    │   │  └───────────┘  │   │  └───────────┘  │    │
-    │   └─────────────────┘   └─────────────────┘    │
-    └─────────────────────────────────────────────────┘
+    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+    â”‚                                                 â”‚
+    â”‚   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”    â”‚
+    â”‚   â”‚   UART TX        â”‚   â”‚   UART RX        â”‚    â”‚
+    â”‚   â”‚                 â”‚   â”‚                 â”‚    â”‚
+    â”‚   â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚   â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚    â”‚
+    â”‚   â”‚  â”‚  Baud Gen  â”‚  â”‚   â”‚  â”‚  Baud Gen  â”‚  â”‚    â”‚
+    â”‚   â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚   â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚    â”‚
+    â”‚   â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚   â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚    â”‚
+    â”‚   â”‚  â”‚  TX FSM    â”‚  â”‚   â”‚  â”‚  RX FSM    â”‚  â”‚    â”‚
+    â”‚   â”‚  â”‚ IDLEâ†’START â”‚  â”‚   â”‚  â”‚ IDLEâ†’START â”‚  â”‚    â”‚
+    â”‚   â”‚  â”‚ â†’DATAâ†’STOP â”‚  â”‚   â”‚  â”‚ â†’DATAâ†’STOP â”‚  â”‚    â”‚
+    â”‚   â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚   â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚    â”‚
+    â”‚   â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚   â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”‚    â”‚
+    â”‚   â”‚  â”‚ Shift Reg  â”‚â”€â”€â”¼â”€â”€â”€â”¼â”€â–ºâ”‚ Shift Reg  â”‚  â”‚    â”‚
+    â”‚   â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚   â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚    â”‚
+    â”‚   â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜    â”‚
+    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
 ```
 
 ---
 
-## 📶 UART Protocol (8N1)
+## ðŸ“¶ UART Protocol (8N1)
 
 ```
-        ┌─────┐     ┌───┬───┬───┬───┬───┬───┬───┬───┐     ┌─────┐
-IDLE    │     │START│ D0│ D1│ D2│ D3│ D4│ D5│ D6│ D7│STOP │     │ IDLE
-(HIGH)  │  1  │  0  │   │   │   │   │   │   │   │   │  1  │  1  │
-        └─────┘     └───┴───┴───┴───┴───┴───┴───┴───┘     └─────┘
-               ◄───── 1 bit ─────►                   ◄── 1 bit ──►
+        â”Œâ”€â”€â”€â”€â”€â”     â”Œâ”€â”€â”€â”¬â”€â”€â”€â”¬â”€â”€â”€â”¬â”€â”€â”€â”¬â”€â”€â”€â”¬â”€â”€â”€â”¬â”€â”€â”€â”¬â”€â”€â”€â”     â”Œâ”€â”€â”€â”€â”€â”
+IDLE    â”‚     â”‚STARTâ”‚ D0â”‚ D1â”‚ D2â”‚ D3â”‚ D4â”‚ D5â”‚ D6â”‚ D7â”‚STOP â”‚     â”‚ IDLE
+(HIGH)  â”‚  1  â”‚  0  â”‚   â”‚   â”‚   â”‚   â”‚   â”‚   â”‚   â”‚   â”‚  1  â”‚  1  â”‚
+        â””â”€â”€â”€â”€â”€â”˜     â””â”€â”€â”€â”´â”€â”€â”€â”´â”€â”€â”€â”´â”€â”€â”€â”´â”€â”€â”€â”´â”€â”€â”€â”´â”€â”€â”€â”´â”€â”€â”€â”˜     â””â”€â”€â”€â”€â”€â”˜
+               â—„â”€â”€â”€â”€â”€ 1 bit â”€â”€â”€â”€â”€â–º                   â—„â”€â”€ 1 bit â”€â”€â–º
 ```
 
 | Parameter | Value |
@@ -84,25 +84,25 @@ IDLE    │     │START│ D0│ D1│ D2│ D3│ D4│ D5│ D6│ D7│STOP 
 
 ---
 
-## 🧩 Module Hierarchy
+## ðŸ§© Module Hierarchy
 
 ```
 uart_top
-├── uart_tx          # Transmitter module
-│   ├── Baud rate generator
-│   ├── TX FSM (IDLE → START → DATA → STOP)
-│   └── Parallel-to-serial shift register
-│
-└── uart_rx          # Receiver module
-    ├── Baud rate generator
-    ├── RX FSM (IDLE → START → DATA → STOP)
-    ├── Mid-bit sampling logic
-    └── Serial-to-parallel shift register
+â”œâ”€â”€ uart_tx          # Transmitter module
+â”‚   â”œâ”€â”€ Baud rate generator
+â”‚   â”œâ”€â”€ TX FSM (IDLE â†’ START â†’ DATA â†’ STOP)
+â”‚   â””â”€â”€ Parallel-to-serial shift register
+â”‚
+â””â”€â”€ uart_rx          # Receiver module
+    â”œâ”€â”€ Baud rate generator
+    â”œâ”€â”€ RX FSM (IDLE â†’ START â†’ DATA â†’ STOP)
+    â”œâ”€â”€ Mid-bit sampling logic
+    â””â”€â”€ Serial-to-parallel shift register
 ```
 
 ---
 
-## ✨ Features
+## âœ¨ Features
 
 | Feature | Description |
 |---------|-------------|
@@ -110,30 +110,30 @@ uart_top
 | **FSM-Based Control** | Clean 4-state FSM for both TX and RX |
 | **Mid-Bit Sampling** | RX samples at center of each bit period for noise immunity |
 | **Frame Error Detection** | Flags frames with invalid stop bits |
-| **Loopback Testbench** | TX → RX loopback for comprehensive self-testing |
+| **Loopback Testbench** | TX â†’ RX loopback for comprehensive self-testing |
 | **Synthesizable RTL** | Ready for FPGA implementation |
 
 ---
 
-## 📁 File Structure
+## ðŸ“ File Structure
 
 ```
 VLSI-UART-Transceiver-Verilog/
-├── src/
-│   ├── uart_tx.v           # UART Transmitter
-│   ├── uart_rx.v           # UART Receiver
-│   └── uart_top.v          # Top-level integration
-├── testbench/
-│   └── uart_tb.v           # Loopback testbench
-├── docs/
-├── .gitignore
-├── LICENSE
-└── README.md
+â”œâ”€â”€ src/
+â”‚   â”œâ”€â”€ uart_tx.v           # UART Transmitter
+â”‚   â”œâ”€â”€ uart_rx.v           # UART Receiver
+â”‚   â””â”€â”€ uart_top.v          # Top-level integration
+â”œâ”€â”€ testbench/
+â”‚   â””â”€â”€ uart_tb.v           # Loopback testbench
+â”œâ”€â”€ docs/
+â”œâ”€â”€ .gitignore
+â”œâ”€â”€ LICENSE
+â””â”€â”€ README.md
 ```
 
 ---
 
-## 🚀 Simulation Guide
+## ðŸš€ Simulation Guide
 
 ### Using Icarus Verilog
 
@@ -179,25 +179,26 @@ vsim -run -all uart_tb
 
 ---
 
-## 💡 Applications
+## ðŸ’¡ Applications
 
-- 🔌 **FPGA-to-PC Communication** — Debug interfaces via USB-UART
-- 🏭 **SoC Peripherals** — Standard UART IP core in ASIC designs
-- 📡 **Sensor Interfaces** — GPS, Bluetooth, WiFi module communication
-- 🔧 **Debugging** — Serial console output from embedded processors
+- ðŸ”Œ **FPGA-to-PC Communication** â€” Debug interfaces via USB-UART
+- ðŸ­ **SoC Peripherals** â€” Standard UART IP core in ASIC designs
+- ðŸ“¡ **Sensor Interfaces** â€” GPS, Bluetooth, WiFi module communication
+- ðŸ”§ **Debugging** â€” Serial console output from embedded processors
 
 ---
 
-## 👨‍💻 Author
+## ðŸ‘¨â€ðŸ’» Author
 
 **Daggolu Hari Krishna**
 B.Tech ECE | JNTUA College of Engineering, Kalikiri
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat-square&logo=linkedin)](https://linkedin.com/in/harikrishnadaggolu)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/contacthari88/)
 [![Email](https://img.shields.io/badge/Email-Contact-red?style=flat-square&logo=gmail)](mailto:haridaggolu@gmail.com)
+[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?style=flat-square&logo=github)](https://github.com/HariKrishna0088)
 
 ---
 
 <p align="center">
-  ⭐ If you found this project helpful, please give it a star! ⭐
+  â­ If you found this project helpful, please give it a star! â­
 </p>
